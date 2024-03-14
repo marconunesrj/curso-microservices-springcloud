@@ -43,7 +43,7 @@ public class CartoesResource {
             @RequestParam("cpf") String cpf){
         List<ClienteCartao> lista = clienteCartaoService.listCartoesByCpf(cpf);
         List<CartoesPorClienteResponse> resultList = lista.stream()
-                .map(CartoesPorClienteResponse::fromModel)
+                .map(CartoesPorClienteResponse::fromModel)  // Method Reference
                 .collect(Collectors.toList());
         return ResponseEntity.ok(resultList);
     }

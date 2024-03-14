@@ -5,8 +5,8 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
-          lower-case-service-id: true
+          enabled: true  # Habilitando o Cloud Gateway
+          lower-case-service-id: true  # Localizar por lower-case-service-id (caixa baixa/escrito em letra minúscula) Ex: msclientes
   security:
     oauth2:
       resourceserver:

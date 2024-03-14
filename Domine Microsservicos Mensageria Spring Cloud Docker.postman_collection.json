@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "fd7f87ad-5edf-4f27-b038-570dfc3de852",
+		"name": "Domine Microsservicos Mensageria Spring Cloud Docker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32698087"
+	},
+	"item": [
+		{
+			"name": "MS Clientes",
+			"item": [
+				{
+					"name": "Teste MS Clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_clientes_port}}/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_clientes_port}}",
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inclusao Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"00040663752\",\r\n    \"nome\": \"Marco Nunes\",\r\n    \"idade\": 55\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{ms_clientes_port}}/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_clientes_port}}",
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_clientes_port}}/clientes?cpf=00040663752",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_clientes_port}}",
+							"path": [
+								"clientes"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "00040663752"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MS Cartões",
+			"item": [
+				{
+					"name": "Teste MS Cartoes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_cartoes_port}}/cartoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_cartoes_port}}",
+							"path": [
+								"cartoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Cartões com Renda até xxx",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_cartoes_port}}/cartoes?renda=8000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_cartoes_port}}",
+							"path": [
+								"cartoes"
+							],
+							"query": [
+								{
+									"key": "renda",
+									"value": "8000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Cartões por Clientes com CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_cartoes_port}}/cartoes?cpf=00040663752",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_cartoes_port}}",
+							"path": [
+								"cartoes"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "00040663752"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Cartão",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Itaú MasterCard\",\r\n    \"bandeira\": \"MASTERCARD\",\r\n    \"renda\": 8000.00,\r\n    \"limite\": 16000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{ms_cartoes_port}}/cartoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_cartoes_port}}",
+							"path": [
+								"cartoes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MS Avaliador Credito",
+			"item": [
+				{
+					"name": "Teste MS Avaliador Credito",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_avaliador_credito_port}}/avaliacoes-credito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_avaliador_credito_port}}",
+							"path": [
+								"avaliacoes-credito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_avaliador_credito_port}}/avaliacoes-credito/situacao-cliente?cpf=00040663752",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_avaliador_credito_port}}",
+							"path": [
+								"avaliacoes-credito",
+								"situacao-cliente"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "00040663752"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Realizar Avaliação",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"00040663752\",\r\n    \"renda\": 8000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{ms_avaliador_credito_port}}/avaliacoes-credito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_avaliador_credito_port}}",
+							"path": [
+								"avaliacoes-credito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solicitar Cartão",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCartao\": 1,\r\n    \"cpf\": \"00040663752\",\r\n    \"endereco\": \"Rua x\",\r\n    \"limiteLiberado\": 88000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{ms_avaliador_credito_port}}/avaliacoes-credito/solicitacoes-cartao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_avaliador_credito_port}}",
+							"path": [
+								"avaliacoes-credito",
+								"solicitacoes-cartao"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MS Gateway",
+			"item": [
+				{
+					"name": "Find Cliente By CPF Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_clientes_port}}/clientes?cpf=00040663752",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_clientes_port}}",
+							"path": [
+								"clientes"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "00040663752"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

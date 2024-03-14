@@ -22,6 +22,7 @@ public class ClientesResource {
 
     @GetMapping
     public String status(){
+        // Utilizado para saber de qual instância está sendo chamado o serviço (Para teste)
         log.info("Obtendo o status do microservice de clientes");
         return "ok";
     }
@@ -30,9 +31,9 @@ public class ClientesResource {
     public ResponseEntity save(@RequestBody ClienteSaveRequest request){
         var cliente = request.toModel();
         service.save(cliente);
-        URI headerLocation = ServletUriComponentsBuilder
+        URI headerLocation = ServletUriComponentsBuilder  // Construir URL dinâmicas
                 .fromCurrentRequest()
-                .query("cpf={cpf}")
+                .query("cpf={cpf}")  // Passando parâmetros na URL
                 .buildAndExpand(cliente.getCpf())
                 .toUri();
         return ResponseEntity.created(headerLocation).build();

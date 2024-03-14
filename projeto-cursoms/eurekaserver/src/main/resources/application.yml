@@ -1,6 +1,6 @@
 spring:
   application:
-    name: eurekaserver
+    name: eurekaserver  # Utilizado para identificar a comunicação entre o Eureka e o RabbitMq
   security:
     basic:
       enabled: true
@@ -13,5 +13,5 @@ server:
 
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: false   # Utilizado para informar para o eureka não se auto registrar
+    fetch-registry: false         # É false porque quem vai fazer o registry é o Gateway
