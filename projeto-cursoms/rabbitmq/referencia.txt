@@ -1,0 +1,2 @@
+https://elnatantorres.medium.com/configuring-rabbitmq-on-its-startup-with-docker-d219af4b751a
+https://stackoverflow.com/questions/58266688/how-to-create-a-queue-in-rabbitmq-upon-startup

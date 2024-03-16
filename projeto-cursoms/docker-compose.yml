@@ -1,0 +1,310 @@
+version: '3.8'
+services:
+  cursoms-rabbitmq:
+    container_name: cursoms-rabbitmq
+    image: marconunesrj007/rabbitmq:3.9-management
+    build:
+      context: .
+      dockerfile: rabbitmq/Dockerfile
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    expose:
+      - 15672
+    networks:
+      - cursoms-network
+
+#docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:24.0.1 start-dev
+# https://dev.to/pedronandi/subindo-keycloak-2002-via-docker-compose-2o4f
+#  cursoms-keycloak:
+#    container_name: cursoms-keycloak
+##    image: quay.io/keycloak/keycloak:20.0.2
+#    image: marconunesrj007/cursoms-keycloak
+#    build:
+#      context: .
+#      dockerfile: keycloak/Dockerfile
+#    environment:
+#      KC_HOSTNAME: localhost
+#      KC_HOSTNAME_PORT: 7080
+#      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+##      KC_DB: postgres
+##      KC_DB_URL: jdbc:postgresql://postgres-db:5432/cursoms?currentSchema=postgres
+##      KC_DB_USERNAME: postgres
+##      KC_DB_PASSWORD: postgres
+#      KC_DB: mysql
+#      KC_DB_URL: jdbc:mysql://mysqldev:3315/meu_schema?createDatabaseIfNotExist=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&enabledTLSProtocols=TLSv1,TLSv1.1,TLSv1.2
+#      KC_DB_USERNAME: root
+#      KC_DB_PASSWORD: root
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#      KC_HEALTH_ENABLED: "true"
+#      KC_LOG_LEVEL: info
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://localhost:7080/health/ready" ]
+#      interval: 15s
+#      timeout: 2s
+#      retries: 15
+#    command:
+#      [ "start-dev", "--http-port 7080", "--https-port 7443", "--import-realm" ]  # em produção seria start ou invés de start-dev
+#    volumes:
+#      - keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+#    ports:
+#      - "7080:7080"
+#      - "7443:7443"
+#    expose:
+#      - 7080
+#    depends_on:
+#      - mysqldev
+##      - postgres-db
+##      - mysqldev
+#    networks:
+#      - cursoms-network
+
+
+#  cursoms-keycloak:
+#      container_name: cursoms-keycloak
+#      image: quay.io/keycloak/keycloak:21.0.2
+#      restart: always
+#      environment:
+#      ports:
+#        - '8081:8081'
+#      command: -v start-dev --import-realm
+#      volumes:
+#        - ./keycloak/realm-export.json:/opt/keycloak/data/import
+
+#  postgres-db:
+#    container_name: postgres-db
+#    image: postgres:13.2
+#    ports:
+#      - "5433:5432"
+#    environment:
+#      POSTGRES_DB: keycloak
+#      POSTGRES_USER: keycloak
+#      POSTGRES_PASSWORD: password
+#    volumes:
+#      - postgresql_data:/var/lib/postgresql/data
+#    networks:
+#      - cursoms-network
+
+#  cursoms-keycloak:
+#    container_name: cursoms-keycloak
+#    image: quay.io/keycloak/keycloak:21.0.2
+#    command: start-dev --import-realm
+#    environment:
+#      DB_VENDOR: POSTGRES
+#      DB_ADDR: postgres
+#      DB_DATABASE: keycloak
+#      DB_USER: keycloak
+#      DB_PASSWORD: password
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    ports:
+#      - "8081:8081"
+#    volumes:
+#      - ./keycloak/realm-export.json:/opt/keycloak/data/import
+#    networks:
+#      - cursoms-network
+#    depends_on:
+#      - postgres-db
+
+  cursoms-keycloak:
+    container_name: cursoms-keycloak
+    image: quay.io/keycloak/keycloak:22.0.0
+    environment:
+        KEYCLOAK_ADMIN: admin
+        KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./keycloak/config/:/opt/keycloak/data/import:ro
+    entrypoint: "/opt/keycloak/bin/kc.sh start-dev --import-realm"
+    networks:
+      - cursoms-network
+
+
+#  h2_database:
+  db:
+    container_name: db
+    image: oscarfonts/h2:latest
+    ports:
+      - "8082:8082"
+      - "9092:9092"
+    volumes:
+      - ./curso-microservices-springcloud/db:/opt/h2-data
+    environment:
+      - H2_OPTIONS=-baseDir /opt/h2-data
+    expose:
+      - 8082
+    networks:
+      - cursoms-network
+
+#  mysqldev:
+#    container_name: mysqldev
+#    image: mysql:8.0.29
+#    command: mysqld --default-authentication-plugin=mysql_native_password  # para autenticar no Banco de Dados
+#    restart: always
+#    environment:
+#      TZ: America/Sao_Paulo
+#      MYSQL_ROOT_PASSWORD: root
+##      MYSQL_USER: root
+#      MYSQL_PASSWORD: root
+#      MYSQL_DATABASE: mysqldev
+#      MYSQL_ROOT_HOST: "%'
+#      MYSQL_TCP_PORT: 3315
+#    ports:
+#      - "3315:3315"
+#    expose:
+#      - 3315
+#    networks:
+#      - cursoms-network
+
+#  postgres-db:
+#    container_name: postgres-db
+#    image: postgres:9.6
+#    ports:
+#      - "5433:5432"
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=cursoms
+#      - POSTGRES_INITDB_ARGS='--encoding=UTF-8'    # --lc-collate=C --lc-ctype=C'
+#    restart: always
+#    expose:
+#      - 5433
+#    networks:
+#      - cursoms-network
+#    volumes:
+#      - postgresql:/var/lib/postgresql
+#      - postgresql_data:/var/lib/postgresql/data
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+#      interval: 1s
+
+  cursoms-eureka-server:
+    container_name: cursoms-eureka-server
+    image: marconunesrj007/cursoms-eureka-server:0.0.1-SNAPSHOT
+    build:
+      context: .
+      dockerfile: eurekaserver/Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - cursoms-network
+
+  cursoms-mscloud-gateway:
+    container_name: cursoms-mscloud-gateway
+    image: marconunesrj007/cursoms-mscloud-gateway:0.0.1-SNAPSHOT
+    restart: always
+    build:
+      context: .
+      dockerfile: mscloudgateway/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cursoms-keycloak
+      - cursoms-eureka-server
+      - cursoms-msclientes
+      - cursoms-mscartoes
+      - cursoms-msavaliadorcredito
+#      - cursoms-rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://cursoms-eureka-user:ecok-usr-eeuramssur@cursoms-eureka-server:8761/eureka
+#      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@cursoms-rabbitmq:5672
+      SPRING_RABBITMQ_HOST: cursoms-rabbitmq
+#      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      KEYCLOAK_SERVER: cursoms-keycloak
+      # A mesma porta do keycloak no Docker
+      KEYCLOAK_PORT: 8080
+    networks:
+      - cursoms-network
+
+  cursoms-msclientes:
+    container_name: cursoms-msclientes
+    image: marconunesrj007/cursoms-msclientes:0.0.1-SNAPSHOT
+    restart: always
+    build:
+      context: .
+      dockerfile: msclientes/Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://cursoms-eureka-user:ecok-usr-eeuramssur@cursoms-eureka-server:8761/eureka
+      RABBIT_URI: amqp://guest:guest@cursoms-rabbitmq:5672
+      SPRING_RABBITMQ_HOST: cursoms-rabbitmq
+      DATABASE_HOST: db
+      DATABASE_PORT: 8082
+      DATABASE_USER: sa
+      DATABASE_PASSWD:
+      DATABASE_UPDATE: none    # Não atualiza o banco e então mantém os dados persistidos
+#    ports:
+#      - 8000:8000
+    depends_on:
+      - db
+      - cursoms-eureka-server
+#      - cursoms-rabbitmq
+    networks:
+      - cursoms-network
+
+  cursoms-mscartoes:
+    container_name: cursoms-mscartoes
+    image: marconunesrj007/cursoms-mscartoes:0.0.1-SNAPSHOT
+    restart: always
+    build:
+      context: .
+      dockerfile: mscartoes/Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://cursoms-eureka-user:ecok-usr-eeuramssur@cursoms-eureka-server:8761/eureka
+      RABBIT_URI: amqp://guest:guest@cursoms-rabbitmq:5672
+      SPRING_RABBITMQ_HOST: cursoms-rabbitmq
+      DATABASE_HOST: db
+      DATABASE_PORT: 8082
+      DATABASE_USER: sa
+      DATABASE_PASSWD:
+      DATABASE_UPDATE: none    # Não atualiza o banco e então mantém os dados persistidos
+#    ports:
+#      - 8100:8100
+    depends_on:
+      - db
+      - cursoms-eureka-server
+      - cursoms-rabbitmq
+    networks:
+      - cursoms-network
+
+  cursoms-msavaliadorcredito:
+    container_name: cursoms-msavaliadorcredito
+    image: marconunesrj007/cursoms-msavaliadorcredito:0.0.1-SNAPSHOT
+    restart: always
+    build:
+      context: .
+      dockerfile: msavaliadorcredito/Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://cursoms-eureka-user:ecok-usr-eeuramssur@cursoms-eureka-server:8761/eureka
+      RABBIT_URI: amqp://guest:guest@cursoms-rabbitmq:5672
+      SPRING_RABBITMQ_HOST: cursoms-rabbitmq
+      DATABASE_HOST: db
+      DATABASE_PORT: 8082
+      DATABASE_USER: sa
+      DATABASE_PASSWD:
+      DATABASE_UPDATE: none    # Não atualiza o banco e então mantém os dados persistidos
+#    ports:
+#      - 8200:8200
+    depends_on:
+#      - db
+      - cursoms-eureka-server
+      - cursoms-rabbitmq
+    networks:
+      - cursoms-network
+
+
+networks:
+  cursoms-network:
+    driver: bridge
+
+volumes:
+#  postgresql:
+  postgresql_data:

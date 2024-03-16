@@ -87,25 +87,6 @@
 			"name": "MS Cartões",
 			"item": [
 				{
-					"name": "Teste MS Cartoes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{ms_cartoes_port}}/cartoes",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{ms_cartoes_port}}",
-							"path": [
-								"cartoes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Listar Cartões com Renda até xxx",
 					"request": {
 						"method": "GET",
@@ -125,6 +106,25 @@
 									"key": "renda",
 									"value": "8000"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Teste MS Cartoes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{ms_cartoes_port}}/cartoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{ms_cartoes_port}}",
+							"path": [
+								"cartoes"
 							]
 						}
 					},
@@ -268,7 +268,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idCartao\": 1,\r\n    \"cpf\": \"00040663752\",\r\n    \"endereco\": \"Rua x\",\r\n    \"limiteLiberado\": 88000\r\n}",
+							"raw": "{\r\n    \"idCartao\": 2,\r\n    \"cpf\": \"00040663752\",\r\n    \"endereco\": \"Rua x\",\r\n    \"limiteLiberado\": 88000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -296,31 +296,455 @@
 			"name": "MS Gateway",
 			"item": [
 				{
-					"name": "Find Cliente By CPF Gateway",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{ms_clientes_port}}/clientes?cpf=00040663752",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{ms_clientes_port}}",
-							"path": [
-								"clientes"
-							],
-							"query": [
-								{
-									"key": "cpf",
-									"value": "00040663752"
+					"name": "MS Avaliador Credito",
+					"item": [
+						{
+							"name": "Solicitar Cartão",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyVjJxbk1lZllnWGlvQmI5MUJLLWQxWjB0eFNyYXRLUWlQVmZzbWlWY2R3In0.eyJleHAiOjE3MTA0NDc3MjAsImlhdCI6MTcxMDQ0NzQyMCwianRpIjoiNDFkYjg3NTMtMTM1NS00NjVkLTg5MmQtMjhhMDNhMGY3YzcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9tc2NvdXJzZXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY0NGQ3MGUxLTQzZTMtNDhjOS1iODkyLTFmOThmMTU5NGJkMSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1zY3JlZGl0byIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXNjb3Vyc2VyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtc2NyZWRpdG8iOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtbXNjcmVkaXRvIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJtc2NyZWRpdG8ifQ.lvSLXRgSTdmDRZmnlLoERixjLI8xPgCrTtgfgplSSUBTKDbkMYIEr1eeRzfBFw7XTtrMIjaub3Xpgcw1Mj2TeaYeO5N37BWDq7o9KKiHu04P0QxSfevLxthMf35V3uvvUhLO6wEWXafh_4nnKH2dRkXe-79tTvI_MlatzcrK-iEQjtwGLwdbi-iThIGWQVYDRv2fYzjLIfseRNPgYT4I_LDZZtnW-EWh2-XxRdP4JbnCQOZk1Xp6hicp4-kC4F2694GMN9fCKNDIZe2Ks6CuqFKjnMKX2VbbCC_dkApuvNJYxZ7dL9yEZx388WhPZ14YC5UMzjE9FNo38fPNA0u_oA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idCartao\": 1,\r\n    \"cpf\": \"00040663752\",\r\n    \"endereco\": \"Rua x\",\r\n    \"limiteLiberado\": 88000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/avaliacoes-credito/solicitacoes-cartao",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacoes-credito",
+										"solicitacoes-cartao"
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Realizar Avaliação",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyVjJxbk1lZllnWGlvQmI5MUJLLWQxWjB0eFNyYXRLUWlQVmZzbWlWY2R3In0.eyJleHAiOjE3MTA0NDgwNjMsImlhdCI6MTcxMDQ0Nzc2MywianRpIjoiNTU4YTdlZmMtOTRmYy00NzdjLWFiMjEtMjZlZTEwZGEyODkwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9tc2NvdXJzZXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY0NGQ3MGUxLTQzZTMtNDhjOS1iODkyLTFmOThmMTU5NGJkMSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1zY3JlZGl0byIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXNjb3Vyc2VyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtc2NyZWRpdG8iOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtbXNjcmVkaXRvIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJtc2NyZWRpdG8ifQ.wA-AT0kktk2v59OE6Xy0rQpl4vbGz_QmEVyewszqxScA34hZCqHirBZH07amAMdlVdf-TJiTeuVe6GncNN0P8Nm2mlSETnL7mZ0MGmHgNWsqeNpqB1BmoQJRLjAc1I0gY5pEjjqHPg6P8ctZzp9EzJvqC-6MmLoWzZHx3_0DmWDnpZ-T_Ka61GoZPsWsYS_AAFcYIj5ScDStn9JwKXv7acsRTiUPLg9iLDiV0rXrCbdMqWkoCszAqhhVQ-mz1FN9PaOg_1gdcnZ5xxXnqjBRDLOgyrVOPSiNM0haqNVakujf63rqDQ06VouaPyATREpXORZZhhAP5al7DcrM8JSRWw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cpf\": \"00040663752\",\r\n    \"renda\": 8000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/avaliacoes-credito",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacoes-credito"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find By CPF",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyVjJxbk1lZllnWGlvQmI5MUJLLWQxWjB0eFNyYXRLUWlQVmZzbWlWY2R3In0.eyJleHAiOjE3MTA0NDgwNjMsImlhdCI6MTcxMDQ0Nzc2MywianRpIjoiNTU4YTdlZmMtOTRmYy00NzdjLWFiMjEtMjZlZTEwZGEyODkwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9tc2NvdXJzZXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY0NGQ3MGUxLTQzZTMtNDhjOS1iODkyLTFmOThmMTU5NGJkMSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1zY3JlZGl0byIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXNjb3Vyc2VyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtc2NyZWRpdG8iOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtbXNjcmVkaXRvIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJtc2NyZWRpdG8ifQ.wA-AT0kktk2v59OE6Xy0rQpl4vbGz_QmEVyewszqxScA34hZCqHirBZH07amAMdlVdf-TJiTeuVe6GncNN0P8Nm2mlSETnL7mZ0MGmHgNWsqeNpqB1BmoQJRLjAc1I0gY5pEjjqHPg6P8ctZzp9EzJvqC-6MmLoWzZHx3_0DmWDnpZ-T_Ka61GoZPsWsYS_AAFcYIj5ScDStn9JwKXv7acsRTiUPLg9iLDiV0rXrCbdMqWkoCszAqhhVQ-mz1FN9PaOg_1gdcnZ5xxXnqjBRDLOgyrVOPSiNM0haqNVakujf63rqDQ06VouaPyATREpXORZZhhAP5al7DcrM8JSRWw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{ms_avaliador_credito_port}}/avaliacoes-credito/situacao-cliente?cpf=00040663752",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ms_avaliador_credito_port}}",
+									"path": [
+										"avaliacoes-credito",
+										"situacao-cliente"
+									],
+									"query": [
+										{
+											"key": "cpf",
+											"value": "00040663752"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Teste MS Avaliador Credito",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyVjJxbk1lZllnWGlvQmI5MUJLLWQxWjB0eFNyYXRLUWlQVmZzbWlWY2R3In0.eyJleHAiOjE3MTA0NDczMDEsImlhdCI6MTcxMDQ0NzAwMSwianRpIjoiMzIzNmRmNzQtOGUwYy00OTdjLTlmYjctYTI1YmRlNTUyZTkzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9tc2NvdXJzZXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY0NGQ3MGUxLTQzZTMtNDhjOS1iODkyLTFmOThmMTU5NGJkMSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1zY3JlZGl0byIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXNjb3Vyc2VyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtc2NyZWRpdG8iOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtbXNjcmVkaXRvIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJtc2NyZWRpdG8ifQ.dSZB9FgZqXAPNgApMVrLjB9epEZ-qj9NeuzukOat2yaKkT2e1_WlSYLNUw7U8Wc8CT3WAFdbYRIpA9RZFOMiyPISevHJ7nmQ3aH3QoCup34jWiX0kL3agLGUv_YBQhmvdniGcYKWUMZcfRbCcARfplN1Xy6Y-2jTZw58NsuhFnCLq1StidcI-3S7VEBLwX4Naxx7qRDwmVhcD02uwnyaA0vULD9SnwUFQnoXUrfPWEhc_MqMaQBwEX8IhBhh4IuWYgmqyVcX6Y8O9p8pkDPh3lX3gU68tIGrBmbzHHt7jKXWreI7HbxORQnE9oic9p7tKvxZ4PYjRA8IQShogvRJ8Q",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/avaliacoes-credito",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacoes-credito"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "MS Cartões",
+					"item": [
+						{
+							"name": "Listar Cartões com Renda até xxx",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyVjJxbk1lZllnWGlvQmI5MUJLLWQxWjB0eFNyYXRLUWlQVmZzbWlWY2R3In0.eyJleHAiOjE3MTA0NDczMDEsImlhdCI6MTcxMDQ0NzAwMSwianRpIjoiMzIzNmRmNzQtOGUwYy00OTdjLTlmYjctYTI1YmRlNTUyZTkzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9tc2NvdXJzZXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY0NGQ3MGUxLTQzZTMtNDhjOS1iODkyLTFmOThmMTU5NGJkMSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1zY3JlZGl0byIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXNjb3Vyc2VyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtc2NyZWRpdG8iOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtbXNjcmVkaXRvIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJtc2NyZWRpdG8ifQ.dSZB9FgZqXAPNgApMVrLjB9epEZ-qj9NeuzukOat2yaKkT2e1_WlSYLNUw7U8Wc8CT3WAFdbYRIpA9RZFOMiyPISevHJ7nmQ3aH3QoCup34jWiX0kL3agLGUv_YBQhmvdniGcYKWUMZcfRbCcARfplN1Xy6Y-2jTZw58NsuhFnCLq1StidcI-3S7VEBLwX4Naxx7qRDwmVhcD02uwnyaA0vULD9SnwUFQnoXUrfPWEhc_MqMaQBwEX8IhBhh4IuWYgmqyVcX6Y8O9p8pkDPh3lX3gU68tIGrBmbzHHt7jKXWreI7HbxORQnE9oic9p7tKvxZ4PYjRA8IQShogvRJ8Q",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/cartoes?renda=8000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cartoes"
+									],
+									"query": [
+										{
+											"key": "renda",
+											"value": "8000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar Cartões por Clientes com CPF Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyVjJxbk1lZllnWGlvQmI5MUJLLWQxWjB0eFNyYXRLUWlQVmZzbWlWY2R3In0.eyJleHAiOjE3MTA0NDczMDEsImlhdCI6MTcxMDQ0NzAwMSwianRpIjoiMzIzNmRmNzQtOGUwYy00OTdjLTlmYjctYTI1YmRlNTUyZTkzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9tc2NvdXJzZXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY0NGQ3MGUxLTQzZTMtNDhjOS1iODkyLTFmOThmMTU5NGJkMSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1zY3JlZGl0byIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXNjb3Vyc2VyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtc2NyZWRpdG8iOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtbXNjcmVkaXRvIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJtc2NyZWRpdG8ifQ.dSZB9FgZqXAPNgApMVrLjB9epEZ-qj9NeuzukOat2yaKkT2e1_WlSYLNUw7U8Wc8CT3WAFdbYRIpA9RZFOMiyPISevHJ7nmQ3aH3QoCup34jWiX0kL3agLGUv_YBQhmvdniGcYKWUMZcfRbCcARfplN1Xy6Y-2jTZw58NsuhFnCLq1StidcI-3S7VEBLwX4Naxx7qRDwmVhcD02uwnyaA0vULD9SnwUFQnoXUrfPWEhc_MqMaQBwEX8IhBhh4IuWYgmqyVcX6Y8O9p8pkDPh3lX3gU68tIGrBmbzHHt7jKXWreI7HbxORQnE9oic9p7tKvxZ4PYjRA8IQShogvRJ8Q",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/cartoes?cpf=00040663752",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cartoes"
+									],
+									"query": [
+										{
+											"key": "cpf",
+											"value": "00040663752"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "MS Clientes",
+					"item": [
+						{
+							"name": "Inclusao Cliente",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyVjJxbk1lZllnWGlvQmI5MUJLLWQxWjB0eFNyYXRLUWlQVmZzbWlWY2R3In0.eyJleHAiOjE3MTA0NDczMDEsImlhdCI6MTcxMDQ0NzAwMSwianRpIjoiMzIzNmRmNzQtOGUwYy00OTdjLTlmYjctYTI1YmRlNTUyZTkzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9tc2NvdXJzZXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjY0NGQ3MGUxLTQzZTMtNDhjOS1iODkyLTFmOThmMTU5NGJkMSIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1zY3JlZGl0byIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXNjb3Vyc2VyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtc2NyZWRpdG8iOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtbXNjcmVkaXRvIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJtc2NyZWRpdG8ifQ.dSZB9FgZqXAPNgApMVrLjB9epEZ-qj9NeuzukOat2yaKkT2e1_WlSYLNUw7U8Wc8CT3WAFdbYRIpA9RZFOMiyPISevHJ7nmQ3aH3QoCup34jWiX0kL3agLGUv_YBQhmvdniGcYKWUMZcfRbCcARfplN1Xy6Y-2jTZw58NsuhFnCLq1StidcI-3S7VEBLwX4Naxx7qRDwmVhcD02uwnyaA0vULD9SnwUFQnoXUrfPWEhc_MqMaQBwEX8IhBhh4IuWYgmqyVcX6Y8O9p8pkDPh3lX3gU68tIGrBmbzHHt7jKXWreI7HbxORQnE9oic9p7tKvxZ4PYjRA8IQShogvRJ8Q",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cpf\": \"00040663752\",\r\n    \"nome\": \"Marco Nunes\",\r\n    \"idade\": 55\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/clientes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find Cliente By CPF Gateway",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/clientes?cpf=00040663752",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes"
+									],
+									"query": [
+										{
+											"key": "cpf",
+											"value": "00040663752"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Teste MS Clientes Gateway",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/clientes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
+		},
+		{
+			"name": "Keycloak Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientId",
+							"value": "{{client_id}}",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "{{client_secret}}",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				]
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"var server       = \"http://localhost:8081\"; // add your Keycloak-URL here (without /auth)\r",
+					"var realm        = \"mscourserealm\"; // the name of the realm\r",
+					"var grantType    = \"password\"; // the granttype, with password you can login as a normal user\r",
+					"var clientId     = \"mscredito\"; // the name of the client you created in Keycloak\r",
+					"var clientSecret = \"2IFp5oaFTWaE4OLR7i6QYgoYeyHeJ0XX\"; // the secret you copied earlier\r",
+					"var username     = \"marconunes\"; // the username of the user you want to test with\r",
+					"var password     = \"admin\"; // the password of the user you want to test with\r",
+					"// http://localhost:8081/realms/mscourserealm/protocol/openid-connect/token\r",
+					"// creating the request URL\r",
+					"//var url  = `${server}/auth/realms/${realm}/protocol/openid-connect/token`;\r",
+					"var url  = `${server}/realms/${realm}/protocol/openid-connect/token`;\r",
+					"// creating the body of the request\r",
+					"var data = `grant_type=${grantType}&client_id=${clientId}&username=${username}&password=${password}&client_secret=${clientSecret}`;\r",
+					"\r",
+					"// request to Keycloak\r",
+					"// read more about this here: https://www.keycloak.org/docs/latest/authorization_services/#_service_overview\r",
+					"pm.sendRequest({\r",
+					"    url: url,\r",
+					"    method: 'POST',\r",
+					"    header: { 'Content-Type': 'application/x-www-form-urlencoded'},\r",
+					"    body: {\r",
+					"        mode: 'raw',\r",
+					"        raw: data\r",
+					"    }\r",
+					"},  function(err, response) {\r",
+					"    // Set the environment variable for token\r",
+					"    var response_json = response.json();\r",
+					"    console.log(response_json);\r",
+					"    //var token = response_json.access_token;\r",
+					"    pm.environment.set('authToken', token);\r",
+					"    // You can open up the console in Postman with Alt + Ctrl + C\r",
+					"    console.log(token);\r",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

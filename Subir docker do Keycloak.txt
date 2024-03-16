@@ -1,0 +1,75 @@
+Subir docker do Keycloak
+https://www.keycloak.org/getting-started/getting-started-docker
+
+docker run -it --name cursomskeycloak -p 8081:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:24.0.1 start-dev
+
+Clique em Keycloak
+
+Clique em Create Realm (pode ser um para a empresa toda ou um para cada setor da empresa ou sistema)
+Nome: mscourserealm (pode ser qualquer um)
+
+Clique no botão "Create"
+
+Clique na Aba "Clients" (aplicação para ser autenticada)
+
+Clique em "Create Client"
+Client Type: OpenID Connect
+Client ID: mscredito
+name: Client Aplicação projeto Avaliação de Crédito
+description: Autenticador para o sistema de crédito
+Always display in UI : True
+
+
+Client authentication: On
+Authorization: On
+Authentication flow: Standard flow e Direct access grants
+
+Valid redirect URI: http://localhost:8080      // Se for retorno para uma aplicação, deve-se colocar a url para a plicação, no caso de API Rest não importa muito
+
+Clique no Botão "Save"
+
+Clicar em "Realm Settings"
+
+Clicar em "OpenID Endpoint Configuration"
+Peagr as informações do link:
+
+
+  "issuer": "http://localhost:8081/realms/mscourserealm",                                                       Utilizado no application.yml
+  "authorization_endpoint": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/auth",
+  "token_endpoint": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/token",                 Utilizado no Postman
+  "introspection_endpoint": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/token/introspect",
+  "userinfo_endpoint": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/userinfo",
+  "end_session_endpoint": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/logout",
+  "frontchannel_logout_session_supported": true,
+  "frontchannel_logout_supported": true,
+  "jwks_uri": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/certs",
+  "check_session_iframe": "http://localhost:8081/realms/mscourserealm/protocol/openid-connect/login-status-iframe.html",
+  
+ Exportar as configurações do Realm
+Clicar em Realm Settings
+Clicar em Action
+Clicar em Partial Export
+Selecionar:
+  Include groups and roles
+  Include clients
+Clicar em Export
+
+  
+  OBS: IMPORTANTE
+  Para importar o arquivo json do realm tem que excluir as Policies
+  
+  OBS: No docker tem que colocar este outro parâmetro, dentro de Realm Settins
+  Frontend URL: http://cursoms-keycloak:8080     Onde cursoms-keycloak é o nome do container ou serviço no docker
+  
+Para executar no Postman
+Crie no Postman duas Variáveis de ambiente
+  client_secret
+  client_id  (Ex: mscredito o mesmo criado acima)  
+
+Entrar no Keycloak http://localhost:8081
+Clicar em Clients
+Clique em mscredito (Client criado anteriormente)
+Selecionar a aba Credentials
+Clicar em Regenerate Secret
+  Copie esta secret e subistitue na variável de ambiente client_secret para ser utilizada na request de Autenticação do Token (Ex: Keycloak Token)
+  

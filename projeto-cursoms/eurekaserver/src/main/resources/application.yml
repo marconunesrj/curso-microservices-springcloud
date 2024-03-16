@@ -6,7 +6,7 @@ spring:
       enabled: true
     user:
       name: cursoms-eureka-user
-      password: ecok-usr-eeuramssur
+      password: ecok-usr-eeuramssur   # Colocar uma senha forte ou uma variável de ambiente
 
 server:
   port: 8761

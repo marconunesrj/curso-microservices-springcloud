@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: mscloudgateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # Habilitando o Cloud Gateway
+          lower-case-service-id: true  # Localizar por lower-case-service-id (caixa baixa/escrito em letra minúscula) Ex: msclientes
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/mscourserealm   # Esta URL vem do Link do "OpenID Endpoint Configuration" do Keycloak informação "issuer"
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url: # http://<usuario>:<senha>@<url>:<porta>/eureka
+      defaultZone: http://cursoms-eureka-user:ecok-usr-eeuramssur@localhost:8761/eureka

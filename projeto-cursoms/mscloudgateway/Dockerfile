@@ -1,14 +1,13 @@
-FROM maven:3.8.5-openjdk-17 as build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
-
 FROM openjdk:17
-WORKDIR /app
-COPY --from=build ./app/target/*.jar ./app.jar
+ARG JAR_FILE=mscloudgateway/target/*.jar
+COPY ${JAR_FILE} app.jar
+RUN bash -c 'touch /app.jar'
 
+# Passa estas variáveis de ambiente para o container que serão utilizadas no application-production.yml da aplicação
 ARG EUREKA_SERVER=localhost
-ARG KEYCLOAK_SERVER=localhost
-ARG KEYCLOAK_PORT=8081
+ARG KEYCLOAK_SERVER=cursoms-keycloak
+# A mesma porta do keycloak no Docker
+ARG KEYCLOAK_PORT=8080
 
+#ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 ENTRYPOINT java -jar app.jar

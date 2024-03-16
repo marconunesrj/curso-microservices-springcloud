@@ -17,6 +17,8 @@ public class SolicitacaoEmissaoCartaoPublisher {
 
     public void solicitarCartao(DadosSolicitacaoEmissaoCartao dados) throws JsonProcessingException {
         var json = convertIntoJson(dados);
+        // queueEmissaoCartoes -> Bean criado na classe MQConfig.java
+        // Enviando os dados em formato json para a Fila do RabbitMQ
         rabbitTemplate.convertAndSend(queueEmissaoCartoes.getName(), json);
     }
 

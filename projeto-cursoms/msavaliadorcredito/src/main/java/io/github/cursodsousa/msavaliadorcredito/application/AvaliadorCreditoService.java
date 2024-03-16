@@ -58,10 +58,12 @@ public class AvaliadorCreditoService {
 
                 DadosCliente dadosCliente = dadosClienteResponse.getBody();
 
+                // Regra de Negócio
                 BigDecimal limiteBasico = cartao.getLimiteBasico();
                 BigDecimal idadeBD = BigDecimal.valueOf(dadosCliente.getIdade());
                 var fator = idadeBD.divide(BigDecimal.valueOf(10));
                 BigDecimal limiteAprovado = fator.multiply(limiteBasico);
+                ////////
 
                 CartaoAprovado aprovado = new CartaoAprovado();
                 aprovado.setCartao(cartao.getNome());

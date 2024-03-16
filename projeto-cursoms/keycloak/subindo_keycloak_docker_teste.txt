@@ -1,0 +1,7 @@
+https://www.keycloak.org/getting-started/getting-started-docker
+
+Subir para criar o realm da aplicação
+docker run --name cursoms-keycloak -it -p 8081:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:22.0.0 start-dev
+18.0.0 // Utilizado no curso
+
+docker run --name cursoms-keycloak -it -p 8081:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:24.0.1 start-dev

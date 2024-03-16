@@ -20,6 +20,9 @@ public class EmissaoCartaoSubscriber {
     private final CartaoRepository cartaoRepository;
     private final ClienteCartaoRepository clienteCartaoRepository;
 
+    // Conectando com o RabbitMQ em qual fila: emissao-cartoes, definida no application.yml
+    // Este é o Listener que recebe as solicitações que estão na fila.
+    // A solicitação vem do msavaliadorcredito (ver classe AvaliadorCreditoController.java, método: solicitarCartao)
     @RabbitListener(queues = "${mq.queues.emissao-cartoes}")
     public void receberSolicitacaoEmissao(@Payload String payload){
         try {
@@ -36,7 +39,7 @@ public class EmissaoCartaoSubscriber {
             clienteCartaoRepository.save(clienteCartao);
 
         }catch (Exception e){
-            log.error("Erro ao receber solicitacao de emissao de cartao: {} ", e.getMessage());
+            log.error("Erro ao receber solicitação de emissão de cartão: {} ", e.getMessage());
         }
     }
 }

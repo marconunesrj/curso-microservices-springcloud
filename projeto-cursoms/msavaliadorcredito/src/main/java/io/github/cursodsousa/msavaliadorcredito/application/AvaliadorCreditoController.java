@@ -54,6 +54,8 @@ public class AvaliadorCreditoController {
             return ResponseEntity.ok(protocoloSolicitacaoCartao);
         }catch (ErroSolicitacaoCartaoException e){
             return ResponseEntity.internalServerError().body(e.getMessage());
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 }

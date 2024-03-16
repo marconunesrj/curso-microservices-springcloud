@@ -1,10 +1,7 @@
-FROM maven:3.8.5-openjdk-17 as build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
-
 FROM openjdk:17
-WORKDIR /app
-COPY --from=build ./app/target/*.jar ./app.jar
+#WORKDIR /app
+ARG JAR_FILE=eurekaserver/target/*.jar
+COPY ${JAR_FILE} app.jar
+RUN bash -c 'touch /app.jar'
 EXPOSE 8761
-ENTRYPOINT java -jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

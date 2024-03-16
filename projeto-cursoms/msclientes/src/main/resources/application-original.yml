@@ -1,11 +1,6 @@
 spring:
   application:
-    name: mscartoes
-  rabbitmq:    # Conexão com o RabbitMQ
-    host: ${RABBITMQ_SERVER}
-    port: 5672
-    username: guest
-    password: guest
+    name: msclientes
   datasource:
 #    url: jdbc:h2:mem:Testdb
     # Caso não exista o banco deve-se retirar IFEXISTS=TRUE
@@ -18,8 +13,6 @@ spring:
   h2:
     console:
       enabled: true
-      settings:
-        web-allow-others: true  # allowing remote connections
     path: /h2-console
 #    settings:
 #      trace: false
@@ -30,28 +23,23 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
-
 server:
-  port: 0  # Porta aleatória
+  port: 0  # Faz a aplicação subir em uma porta aleatória
 
 eureka:
   client:
-    service-url: # http://<usuario>:<senha>@<url>:<porta>/eureka
-      defaultZone: http://cursoms-eureka-user:ecok-usr-eeuramssur@${EUREKA_SERVER}:8761/eureka
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    service-url:   # http://<usuario>:<senha>@<url>:<porta>/eureka
+      defaultZone: http://cursoms-eureka-user:ecok-usr-eeuramssur@localhost:8761/eureka  # Onde está o servidor Eureka
+  instance:      #<spring.application.name>:<rash-randômico>
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}  # Como será registrado no Eureka server
 
-mq:
-  queues:
-    emissao-cartoes: emissao-cartoes  # Tem que criar esta queue no RabbitMQ antes de subir o projeto
-#    cancelamento-cartoes: cancelamento-cartoes  # Caso haja outra fila
-
-management:
+management:  # Para o actuator
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: '*'  # Todos os endPoints
 
 logging:
   file:
     name: ./logs/log-file.log
+

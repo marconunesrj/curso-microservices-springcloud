@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MQConfig {
 
-    @Value("${mq.queues.emissao-cartoes}")
+    @Value("${mq.queues.emissao-cartoes}")  // valor pego no application.yml
     private String emissaoCartoesFila;
 
     @Bean

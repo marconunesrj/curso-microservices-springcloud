@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/75955698/setup-keycloak-version-21-0-2-with-postgressql-using-docker-compse
+https://stackoverflow.com/questions/54796791/importing-keycloak-configuration-files-while-using-docker-compose
+
+https://dev.to/pedronandi/subindo-keycloak-2002-via-docker-compose-2o4f
+
+https://www.keycloak.org/server/containers
