@@ -10,7 +10,8 @@ spring:
 #    url: jdbc:h2:mem:Testdb
     # Caso não exista o banco deve-se retirar IFEXISTS=TRUE
 #    url: jdbc:h2:file:C:/Cursos/domine_microservicos_mensageria_spring_cloud_docker/curso-microservices-springcloud/db/testdb;DB_CLOSE_ON_EXIT=FALSE;IFEXISTS=TRUE;AUTO_RECONNECT=TRUE;DB_CLOSE_DELAY=-1;
-    url: jdbc:h2:file:C:/Cursos/domine_microservicos_mensageria_spring_cloud_docker/curso-microservices-springcloud/db/testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;AUTO_SERVER=TRUE
+#    url: jdbc:h2:file:C:/Cursos/domine_microservicos_mensageria_spring_cloud_docker/curso-microservices-springcloud/db/testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;AUTO_SERVER=TRUE
+    url: jdbc:h2:file:../../db/testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;AUTO_SERVER=TRUE
     username: sa
     password:
     driverClassName: org.h2.Driver

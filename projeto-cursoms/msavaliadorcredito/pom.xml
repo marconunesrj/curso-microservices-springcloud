@@ -20,6 +20,15 @@
 	</properties>
 
 	<dependencies>
+
+		<!-- Faz com que o modulo de msavaliadorcredito tenha acesso as classes do modulo mscartoes
+		<dependency>
+			<groupId>io.github.cursodsousa</groupId>
+			<artifactId>mscartoes</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		-->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

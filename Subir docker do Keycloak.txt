@@ -56,15 +56,45 @@ Clicar em Export
 
   
   OBS: IMPORTANTE
-  Para importar o arquivo json do realm tem que excluir as Policies
-  
+  Para importar o arquivo json do realm tem que excluir as Policies e criar um usuário no arquivo realm-export.json como abaixo  https://stackoverflow.com/questions/48930281/export-all-users-from-keycloak
+     Procure por "users" e adicione o usuário
+	 
+	   "users": [
+			{
+			  "id": "752b79ea-db22-44a6-871a-88906264531d",
+			  "createdTimestamp": 1710596865339,
+			  "username": "marconunes",
+			  "enabled": true,
+			  "emailVerified": true,
+			  "firstName": "Marco",
+			  "lastName": "Nunes",
+			  "email": "marconunes.rj@hotmail.com",
+			  "credentials": [
+				{
+				  "type": "password",
+				  "value": "admin"
+				}
+			  ],
+			  "realmRoles": [
+				"default-roles-mscourserealm"
+			  ],
+			  "clientRoles": {
+				"mscredito": [
+				  "uma_protection"
+				]
+			  }
+			},
+		    ...
+		]
+		
   OBS: No docker tem que colocar este outro parâmetro, dentro de Realm Settins
   Frontend URL: http://cursoms-keycloak:8080     Onde cursoms-keycloak é o nome do container ou serviço no docker
   
 Para executar no Postman
-Crie no Postman duas Variáveis de ambiente
+Crie no Postman três Variáveis de ambiente
   client_secret
   client_id  (Ex: mscredito o mesmo criado acima)  
+  authToken  ( OBS: Veja a collection Domine Microsservicos Mensageria a aba "Pre-request Script" ) 
 
 Entrar no Keycloak http://localhost:8081
 Clicar em Clients

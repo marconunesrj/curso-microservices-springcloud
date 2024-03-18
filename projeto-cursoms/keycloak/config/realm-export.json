@@ -464,6 +464,30 @@
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "users": [
     {
+      "id": "752b79ea-db22-44a6-871a-88906264531d",
+      "createdTimestamp": 1710596865339,
+      "username": "marconunes",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Marco",
+      "lastName": "Nunes",
+      "email": "marconunes.rj@hotmail.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin"
+        }
+      ],
+      "realmRoles": [
+        "default-roles-mscourserealm"
+      ],
+      "clientRoles": {
+        "mscredito": [
+          "uma_protection"
+        ]
+      }
+    },
+    {
       "id": "596472a4-5975-420a-b5a4-040200221840",
       "createdTimestamp": 1710596865339,
       "username": "service-account-mscredito",

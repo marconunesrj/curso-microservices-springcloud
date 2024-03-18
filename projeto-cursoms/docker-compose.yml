@@ -125,19 +125,24 @@ services:
       - cursoms-network
 
 
-#  h2_database:
+#  h2_database:   # conexão http://localhost:8082/  JDBC URL: jdbc:h2:tcp://localhost/dbtest
   db:
     container_name: db
-    image: oscarfonts/h2:latest
+#    image: oscarfonts/h2:latest
+    image: jesperdj/h2
     ports:
       - "8082:8082"
       - "9092:9092"
     volumes:
-      - ./curso-microservices-springcloud/db:/opt/h2-data
+#      - ./curso-microservices-springcloud/db:/opt/h2-data
+#      - ../db:/opt/h2-data
+      - ../db:/db
     environment:
-      - H2_OPTIONS=-baseDir /opt/h2-data
-    expose:
-      - 8082
+#      - H2_OPTIONS=-baseDir /opt/h2-data
+      - H2_OPTIONS= /db
+      - H2_DATA= /db
+#    expose:
+#      - 8082
     networks:
       - cursoms-network
 
